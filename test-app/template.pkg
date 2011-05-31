@@ -1,0 +1,52 @@
+#{"<%= PROJECT_NAME %>"}, (0x<%= UID3 %>), <%= MAJOR_VERSION %>, <%= MINOR_VERSION %>, 0
+
+;Localised Vendor name
+%{"HIIT"}
+
+;Unique Vendor name
+:"HIIT"
+
+;; Platform dependency.
+[0x101F7961], 0, 0, 0, {"Series603rdProductID"}
+
+"skeleton/sys/bin/<%= BASENAME %>_0x<%= UID3 %>.exe" - "!:\sys\bin\<%= BASENAME %>_0x<%= UID3 %>.exe"
+"skeleton/private/10003a3f/import/apps/<%= BASENAME %>_0x<%= UID3 %>_reg.rsc" - "!:\private\10003a3f\import\apps\<%= BASENAME %>_0x<%= UID3 %>_reg.rsc"
+"skeleton/private/<%= UID3 %>/default.py" - "!:\private\<%= UID3 %>\default.py"
+"skeleton/resource/apps/<%= BASENAME %>_0x<%= UID3 %>_loc.r01" - "!:\resource\apps\<%= BASENAME %>_0x<%= UID3 %>_loc.r01"
+"skeleton/resource/apps/<%= BASENAME %>_0x<%= UID3 %>_aif.mif" - "!:\resource\apps\<%= BASENAME %>_0x<%= UID3 %>_aif.mif"
+"skeleton/resource/apps/<%= BASENAME %>_0x<%= UID3 %>_loc.r09" - "!:\resource\apps\<%= BASENAME %>_0x<%= UID3 %>_loc.r09"
+"skeleton/resource/apps/<%= BASENAME %>_0x<%= UID3 %>.rsc" - "!:\resource\apps\<%= BASENAME %>_0x<%= UID3 %>.rsc"
+
+<% unless BYTE_COMPILE %>
+
+"tpytwink_main.py" - "!:\python\tpytwink_main.py"
+
+"tpytwink_engine.py" - "!:\python\lib\tpytwink_engine.py"
+"tpytwink_gallery_screen.py" - "!:\python\lib\tpytwink_gallery_screen.py"
+"tpytwink_list_screen.py" - "!:\python\lib\tpytwink_list_screen.py"
+"tpytwink_logo_screen.py" - "!:\python\lib\tpytwink_logo_screen.py"
+"tpytwink_utils.py" - "!:\python\lib\tpytwink_utils.py"
+
+<% else %>
+
+"tpytwink_main.pyc" - "!:\python\lib\tpytwink_main.pyc"
+
+"tpytwink_engine.pyc" - "!:\python\lib\tpytwink_engine.pyc"
+"tpytwink_gallery_screen.pyc" - "!:\python\lib\tpytwink_gallery_screen.pyc"
+"tpytwink_list_screen.pyc" - "!:\python\lib\tpytwink_list_screen.pyc"
+"tpytwink_logo_screen.pyc" - "!:\python\lib\tpytwink_logo_screen.pyc"
+"tpytwink_utils.pyc" - "!:\python\lib\tpytwink_utils.pyc"
+
+<% end %>
+
+"logo.png" - "!:\data\tpytwink\logo.png"
+
+"backup_registration.xml" - "!:\private\<%= UID3 %>\backup_registration.xml"
+
+<% for sisfile in Dir['deps/*.sis'] 
+   uid_s = lookup_uid_s(sisfile)
+%>
+if not package(<%= uid_s %>)
+@<%= sisfile.inspect %>, (<%= uid_s %>)
+endif ;; package not installed
+<% end %>
