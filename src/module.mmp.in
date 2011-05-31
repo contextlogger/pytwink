@@ -1,0 +1,46 @@
+targettype 	dll
+TARGET	       	<%= $pyd.bin_basename %>.pyd
+
+<% unless build.v9? %>
+TARGETPATH      \system\libs\
+<% end %>
+
+UID             <%= build.uid2.chex_string %> <%= build.uid3.chex_string %>
+
+NOSTRICTDEF
+EXPORTUNFROZEN
+
+SYSTEMINCLUDE 	\epoc32\include
+SYSTEMINCLUDE 	\epoc32\include\libc
+SYSTEMINCLUDE 	\epoc32\include\python
+
+LIBRARY 	python222.lib
+LIBRARY 	euser.lib
+library		avkon.lib
+library		cone.lib
+library		eikcoctl.lib
+library    	lbs.lib
+
+<% if build.trait_map[:do_logging] %>
+LIBRARY         flogger.lib
+<% end %>
+
+USERINCLUDE 	.
+USERINCLUDE 	..\..\src
+userinclude 	..\..\..\shared
+
+SOURCEPATH 	..\..\src
+source		module.cpp
+source		local_epoc_py_utils.cpp
+source		cxx_get_position.cpp
+source		py_get_position.cpp
+source		cxx_positioner.cpp
+source		py_positioner.cpp
+
+SOURCEPATH 	..\..\..\shared\common
+source		panic.cpp
+
+<% if build.v9? %>
+// Better use all DevCert caps to allow processes with higher caps to load the library.
+CAPABILITY 	<%= build.caps_string %>
+<% end %>

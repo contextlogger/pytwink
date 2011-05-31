@@ -1,0 +1,22 @@
+#{"<%= build.name %>"}, (<%= build.uid.chex_string %>), <%= build.major_version %>, <%= build.minor_version %>, 0
+
+<% if build.v9? %>
+;Localised Vendor name
+%{"<%= build.vendor %>"}
+
+;Unique Vendor name
+:"<%= build.vendor %>"
+<% end %>
+
+;; Platform dependency. Supports <%= build.target.handle %>.
+<%= build.target.pkg_dependency_string %>
+
+<% dllname = $exeb[build].bin_basename %>
+
+<% if build.v9? %>
+"<%= dllname %>.pyd" - "!:\sys\bin\<%= dllname %>.pyd"
+<% else %>
+"<%= dllname %>.pyd" - "!:\system\libs\<%= dllname %>.pyd"
+<% end %>
+
+;;"<%= dllname %>.py" - "!:\python\lib\<%= dllname %>.py"

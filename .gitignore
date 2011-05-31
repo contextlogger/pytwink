@@ -1,0 +1,9 @@
+*~
+\#*
+.\#*
+*.swp
+.DS_Store
+.sake_op
+_darcs/
+build/
+local/
